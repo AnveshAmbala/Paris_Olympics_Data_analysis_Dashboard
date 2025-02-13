@@ -2,22 +2,28 @@ name: Pull Request Description
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, edited]
 
 jobs:
-  generate_pr_description:
+  update-pr-description:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # Grant permission to update pull request descriptions
     steps:
-      - uses: actions/checkout@v3
-      
-      - uses: octue/generate-pull-request-description@1.0.0.beta-2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate PR description
+        uses: octue/generate-pull-request-description@1.0.0.beta-2
         id: pr-description
         with:
           pull_request_url: ${{ github.event.pull_request.url }}
           api_token: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Update pull request body
+
+      - name: Update PR description
         uses: riskledger/update-pr-description@v2
         with:
           body: ${{ steps.pr-description.outputs.pull_request_description }}
           token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Pass token directly in env
