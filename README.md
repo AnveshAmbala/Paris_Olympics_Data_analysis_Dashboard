@@ -14,7 +14,7 @@ The home page features the iconic Olympic rings and the title "Paris Olympics 20
 ### 2. Overview
 
 ![Overview](o2.png)
-The overview section provides few key statistics:
+The overview section provides a few key statistics:
 
 - **Total Countries**: 206
 - **Total Athletes**: 11,113 (5,658 male and 5,455 female)
